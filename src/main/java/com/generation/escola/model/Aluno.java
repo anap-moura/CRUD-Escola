@@ -26,7 +26,6 @@ public class Aluno {
     @NotNull(message = "A nota do segundo semestre não pode ser nula")
     private Double notaSegundoSemestre;
 
-
     @NotBlank(message = "O nome do professor não pode estar em branco")
     @Size(max = 100, message = "O nome do professor deve ter no máximo 100 caracteres")
     private String nomeProfessor;
@@ -35,6 +34,20 @@ public class Aluno {
     @Size(max = 10, message = "O número da sala deve ter no máximo 10 caracteres")
     private String numeroSala;
 
+    public Aluno() {
+    }
+
+    public Aluno(Long id, String nome, Integer idade, Double notaPrimeiroSemestre, Double notaSegundoSemestre, String nomeProfessor, String numeroSala) {
+        this.id = id;
+        this.nome = nome;
+        this.idade = idade;
+        this.notaPrimeiroSemestre = notaPrimeiroSemestre;
+        this.notaSegundoSemestre = notaSegundoSemestre;
+        this.nomeProfessor = nomeProfessor;
+        this.numeroSala = numeroSala;
+    }
+
+    // Getters e Setters
     public Long getId() {
         return id;
     }

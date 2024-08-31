@@ -30,9 +30,13 @@ public class AlunoController {
                     .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    @PostMapping
+    @PostMapping("/cadastrar")
     public ResponseEntity<Aluno> createAluno(@RequestBody Aluno aluno) {
         try {
+            if (alunoRepository.existsByNomeAndIdadeAndNotaPrimeiroSemestreAndNotaSegundoSemestreAndNomeProfessorAndNumeroSala(
+                    aluno.getNome(), aluno.getIdade(), aluno.getNotaPrimeiroSemestre(), aluno.getNotaSegundoSemestre(), aluno.getNomeProfessor(), aluno.getNumeroSala())) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            }
             Aluno novoAluno = alunoRepository.save(aluno);
             return ResponseEntity.status(HttpStatus.CREATED).body(novoAluno);
         } catch (Exception e) {
@@ -40,9 +44,9 @@ public class AlunoController {
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Aluno> updateAluno(@PathVariable Long id, @RequestBody Aluno alunoAtualizado) {
-        Optional<Aluno> alunoOptional = alunoRepository.findById(id);
+    @PutMapping("/atualizar")
+    public ResponseEntity<Aluno> updateAluno(@RequestBody Aluno alunoAtualizado) {
+        Optional<Aluno> alunoOptional = alunoRepository.findById(alunoAtualizado.getId());
         if (alunoOptional.isPresent()) {
             Aluno aluno = alunoOptional.get();
             aluno.setNome(alunoAtualizado.getNome());
